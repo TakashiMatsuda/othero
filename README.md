@@ -1,4 +1,0 @@
-othero
-======
-
-othero solver
