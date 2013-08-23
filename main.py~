@@ -1,0 +1,16 @@
+# -*- coding:utf-8 -*-
+
+import solver
+
+N=8
+
+current_table = [[0 for i in range(N)] for j in range(N)]
+print current_table
+current_table[3][3]=1
+current_table[4][4]=1
+current_table[3][4]=2
+current_table[4][3]=2
+print current_table
+
+greedychoice=solver.greedy_eval(current_table)
+print greedychoice
