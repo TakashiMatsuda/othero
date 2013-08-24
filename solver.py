@@ -222,6 +222,7 @@ def transition(table,p,q,player):
     else:
         ME=2
         ENEMY=1
+        
     res=table
     res[p][q]=ME
     #South
