@@ -19,18 +19,11 @@ def parse_input(str):
                 table[i][j]=2
     return table
 
-
-current_table = [[0 for i in range(N)] for j in range(N)]
-current_table[3][3]=2
-current_table[4][4]=2
-current_table[3][4]=1
-current_table[4][3]=1
-
-
 fp=open("inputtest.txt",'r')
 pretable=fp.read()
 got_table=parse_input(pretable)
 print asciivision.output(got_table)
 greedychoice=solver.greedy_eval(got_table)
 print greedychoice
+print asciivision.output(solver.transition(got_table,3,0,1))
 

@@ -211,12 +211,13 @@ def transition(table,p,q,player):
     implement the transition
     """
     if player==1:
-        MY=1
+        ME=1
         ENEMY=2
     else:
-        MY=2
+        ME=2
         ENEMY=1
     res=table
+    res[p][q]=ME
     #South
     line_south=[]#大きさ2の配列のリスト(座標のリスト)
     score_bl=0
@@ -242,7 +243,10 @@ def transition(table,p,q,player):
                     score_bl=0
                     line_south=[]
                     break
+    print "line_south:" + str((len(line_south)))
     for i in range(len(line_south)):
+        print line_south[i][0]
+        print line_south[i][1]
         res[line_south[i][0]][line_south[i][1]]=ME
     
             
@@ -278,19 +282,26 @@ def transition(table,p,q,player):
     vect_rc=[0,0]
     if q<N-1:
         for j in range(q+1,N):
-            if table[p][j]==1:
+            print range(q+1,N)
+            print "loop:"+str(j)
+            if table[p][j]==0:
+                """
+                間違った。こっちに抜ける操作を入れなければいけない。
+                """
                 score_rc=0
                 line_east=[]
                 break
-            if table[p][j]==0:
+            if table[p][j]==ME:
                 if score_rc>0:
+                    print "append"
                     line_east.append([p,j])
                     break
                 else:
                     line_east=[]
                     break
-            if table[p][j]==2:
+            if table[p][j]==ENEMY:
                 if i!=N-1:
+                    print "append"
                     #Extend the target area here only
                     score_rc+=1
                     line_east.append([p,j])
@@ -298,6 +309,7 @@ def transition(table,p,q,player):
                     score_rc=0
                     line_east=[]
                     break
+    print "line_east:" + str((len(line_east)))
     for i in range(len(line_east)):
         res[line_east[i][0]][line_east[i][1]]=ME
     #West
@@ -305,18 +317,18 @@ def transition(table,p,q,player):
     line_west=[]
     if q>0:
         for j in range(q-1,-1,-1):
-            if table[p][j]==1:
+            if table[p][j]==0:
                 score_lc=0
                 line_west=[]
                 break
-            if table[p][j]==0:
+            if table[p][j]==ME:
                 if score_lc>0:
                     line_west.append([p,j])
                     break
                 else:
                     line_west=[]
                     break
-            if table[i][q]==2:
+            if table[i][q]==ENEMY:
                 if i!=N-1:
                     score_lc+=1
                     line_west.append([p,j])
@@ -399,11 +411,11 @@ def transition(table,p,q,player):
         i=p-1
         j=q+1
         while(i>0 and j<N):
-            if table[i][j]==ME:
+            if table[i][j]==0:
                 score_ne=0
                 line_NE=[]
                 break
-            if table[i][j]==0:
+            if table[i][j]==ME:
                 if score_ne==0:
                     line_NE.append([i,j])
                     break
@@ -452,8 +464,7 @@ def transition(table,p,q,player):
                     break
     for i in range(len(line_NW)):
         res[line_NW[i][0]][line_NW[i][1]]=ME
-            
-    return score_bl+score_ol+score_rc+score_lc+score_se+score_sw+score_nw+score_ne
+    return res
 
     
     
