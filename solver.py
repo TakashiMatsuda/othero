@@ -8,24 +8,30 @@ N=8 ## table size
 2:enemy spot
 """
 
-def evaluate_sum(table,p,q):
+def evaluate_sum(table,p,q,player):
+    if player==1:
+        ME=1
+        ENEMY=2
+    else:
+        ME=2
+        ENEMY=1
     score=0
     #below
     score_bl=0
     vect_bl=[0,0]
     if p<N-1:
         for i in range(p+1,N):
-            if table[i][q]==1:
+            if table[i][q]==0:
                 score_bl=0
                 break
-            if table[i][q]==0:
+            if table[i][q]==ME:
                 if score_bl>0:
                     vect_bl[0]=i
                     vect_bl[1]=q
                     break
                 else:
                     break
-            if table[i][q]==2:
+            if table[i][q]==ENEMY:
                 if i!=N-1:
                     score_bl+=1
                 else:
@@ -36,17 +42,17 @@ def evaluate_sum(table,p,q):
     vect_ol=[0,0]
     if p>0:
         for i in range(p-1,-1,-1):
-            if table[i][q]==1:
+            if table[i][q]==0:
                 score_ol=0
                 break
-            if table[i][q]==0:
+            if table[i][q]==ME:
                 if score_ol>0:
                     vect_ol[0]=i
                     vect_ol[1]=q
                     break
                 else:
                     break
-            if table[i][q]==2:
+            if table[i][q]==ENEMY:
                 if i!=N-1:
                     score_bl+=1
                 else:
@@ -57,17 +63,17 @@ def evaluate_sum(table,p,q):
     vect_rc=[0,0]
     if q<N-1:
         for j in range(q+1,N):
-            if table[p][j]==1:
+            if table[p][j]==0:
                 score_rc=0
                 break
-            if table[p][j]==0:
+            if table[p][j]==ME:
                 if score_rc>0:
                     vect_rc[0]=p
                     vect_rc[1]=j
                     break
                 else:
                     break
-            if table[p][j]==2:
+            if table[p][j]==ENEMY:
                 if i!=N-1:
                     #Extend the target area here only
                     score_rc+=1
@@ -79,17 +85,17 @@ def evaluate_sum(table,p,q):
     vect_lc=[0,0]
     if q>0:
         for j in range(q-1,-1,-1):
-            if table[p][j]==1:
+            if table[p][j]==0:
                 score_lc=0
                 break
-            if table[p][j]==0:
+            if table[p][j]==ME:
                 if score_lc>0:
                     vect_lc[0]=p
                     vect_lc[1]=j
                     break
                 else:
                     break
-            if table[i][q]==2:
+            if table[i][q]==ENEMY:
                 if i!=N-1:
                     score_lc+=1
                 else:
@@ -102,19 +108,19 @@ def evaluate_sum(table,p,q):
     j=0
     if p<N-1 and q<N-1:
         i=p+1
-        j=p+1
+        j=q+1
         while(i<N and j<N):
-            if table[i][j]==1:
+            if table[i][j]==0:
                 score_se=0
                 break
-            if table[i][j]==0:
+            if table[i][j]==ME:
                 if score_se>0:
                     vect_se[0]=i
                     vect_se[1]=j
                     break
                 else:
                     break
-            if table[i][j]==2:
+            if table[i][j]==ENEMY:
                 if i!=N-1 and j!=N-1:
                     score_se+=1
                     i+=1
@@ -131,17 +137,17 @@ def evaluate_sum(table,p,q):
         i=p+1
         j=q-1
         while(i>0 and j<N):
-            if table[i][j]==1:
+            if table[i][j]==0:
                 score_sw=0
                 break
-            if table[i][j]==0:
+            if table[i][j]==ME:
                 if score_sw>0:
                     vect_sw[0]=i
                     vect_sw[1]=j
                     break
                 else:
                     break
-            if table[i][j]==2:
+            if table[i][j]==ENEMY:
                 if i!=0 and j!=N-1:
                     score_sw+=1
                     i+=1
@@ -158,17 +164,17 @@ def evaluate_sum(table,p,q):
         i=p-1
         j=q+1
         while(i>0 and j<N):
-            if table[i][j]==1:
+            if table[i][j]==0:
                 score_ne=0
                 break
-            if table[i][j]==0:
+            if table[i][j]==ME:
                 if score_ne==0:
                     vect_ne[0]=i
                     vect_ne[1]=j
                     break
                 else:
                     break
-            if table[i][j]==2:
+            if table[i][j]==ENEMY:
                 if i!=0 and j!=N-1:
                     score_ne+=1
                     i-=1
@@ -185,17 +191,17 @@ def evaluate_sum(table,p,q):
         i=p-1
         j=q-1
         while(i>0 and j>0):
-            if table[i][j]==1:
+            if table[i][j]==0:
                 score_nw=0
                 break
-            if table[i][j]==0:
+            if table[i][j]==ME:
                 if score_nw==0:
                     vect_nw[0]=i
                     vect_nw[1]=j
                     break
                 else:
                     break
-            if table[i][j]==2:
+            if table[i][j]==ENEMY:
                 if i!=0 and j!=N-1:
                     score_nw+=1
                     i-=1
@@ -224,11 +230,11 @@ def transition(table,p,q,player):
     vect_bl=[0,0]
     if p<N-1:
         for i in range(p+1,N):
-            if table[i][q]==ME:
+            if table[i][q]==0:
                 score_bl=0
                 line_south=[]
                 break
-            if table[i][q]==0:
+            if table[i][q]==ME:
                 if score_bl>0:
                     line_south.append([i,q])
                     break
@@ -243,10 +249,8 @@ def transition(table,p,q,player):
                     score_bl=0
                     line_south=[]
                     break
-    print "line_south:" + str((len(line_south)))
+
     for i in range(len(line_south)):
-        print line_south[i][0]
-        print line_south[i][1]
         res[line_south[i][0]][line_south[i][1]]=ME
     
             
@@ -255,11 +259,11 @@ def transition(table,p,q,player):
     line_north=[]
     if p>0:
         for i in range(p-1,-1,-1):
-            if table[i][q]==ME:
+            if table[i][q]==0:
                 score_ol=0
                 line_north=[]
                 break
-            if table[i][q]==0:
+            if table[i][q]==ME:
                 if score_ol>0:
                     line_north.append([i,q])
                     break
@@ -285,15 +289,11 @@ def transition(table,p,q,player):
             print range(q+1,N)
             print "loop:"+str(j)
             if table[p][j]==0:
-                """
-                間違った。こっちに抜ける操作を入れなければいけない。
-                """
                 score_rc=0
                 line_east=[]
                 break
             if table[p][j]==ME:
                 if score_rc>0:
-                    print "append"
                     line_east.append([p,j])
                     break
                 else:
@@ -301,8 +301,6 @@ def transition(table,p,q,player):
                     break
             if table[p][j]==ENEMY:
                 if i!=N-1:
-                    print "append"
-                    #Extend the target area here only
                     score_rc+=1
                     line_east.append([p,j])
                 else:
@@ -345,13 +343,13 @@ def transition(table,p,q,player):
     j=0
     if p<N-1 and q<N-1:
         i=p+1
-        j=p+1
+        j=q+1
         while(i<N and j<N):
-            if table[i][j]==ME:
+            if table[i][j]==0:
                 score_se=0
                 line_SE=[]
                 break
-            if table[i][j]==0:
+            if table[i][j]==ME:
                 if score_se>0:
                     line_SE.append([i,j])
                     break
@@ -368,7 +366,8 @@ def transition(table,p,q,player):
                     line_SE=[]
                     score_se=0
                     break
-    for i in range(len(line_south)):
+    for i in range(len(line_SE)):
+        print "line_SE"+str(line_SE)
         res[line_SE[i][0]][line_SE[i][1]]=ME
     #southwest
     score_sw=0
@@ -379,11 +378,11 @@ def transition(table,p,q,player):
         i=p+1
         j=q-1
         while(i>0 and j<N):
-            if table[i][j]==ME:
+            if table[i][j]==0:
                 score_sw=0
                 line_SW=[]
                 break
-            if table[i][j]==0:
+            if table[i][j]==ME:
                 if score_sw>0:
                     line_SW.append([i,j])
                     break
@@ -443,11 +442,11 @@ def transition(table,p,q,player):
         i=p-1
         j=q-1
         while(i>0 and j>0):
-            if table[i][j]==ME:
+            if table[i][j]==0:
                 score_nw=0
                 line_NW=[]
                 break
-            if table[i][j]==0:
+            if table[i][j]==ME:
                 if score_nw==0:
                     line_NW.append([i,j])
                     break
@@ -473,7 +472,7 @@ def greedy_eval(table):
     s_vect=[0,0]
     for i in range(0,N):
         for j in range(0,N):
-            score=evaluate_sum(table,i,j)
+            score=evaluate_sum(table,i,j,1)
             if score > mx:
                 mx=score
                 s_vect[0]=i

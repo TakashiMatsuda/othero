@@ -25,5 +25,4 @@ got_table=parse_input(pretable)
 print asciivision.output(got_table)
 greedychoice=solver.greedy_eval(got_table)
 print greedychoice
-print asciivision.output(solver.transition(got_table,3,0,1))
-
+print asciivision.output(solver.transition(got_table,greedychoice[0],greedychoice[1],1))
