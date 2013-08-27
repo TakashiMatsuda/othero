@@ -5,6 +5,8 @@ import solver
 import asciivision
 
 N=8
+PLAYER=1
+COMPUTER=2
 
 def parse_input(str):
     table=[[0 for i in range(8)] for j in range(8)]
@@ -29,6 +31,8 @@ pretable=fp.read()
 got_table=parse_input(pretable)
 print asciivision.output(got_table)
 
+
+print "Your color:○" 
 while(True):
     order1=int(raw_input(">入力待ち:行"))
     order2=int(raw_input(">入力待ち:列"))
