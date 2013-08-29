@@ -514,7 +514,7 @@ def judge_constant(table,p,q,color):
     score_SN=0
     enemy_left=False
     enemy_right=False
-    res_SN=True
+    res_SN=False
     if p<N-1:
         for i in range(p+1,N):
             if table[i][q]==0:
@@ -556,7 +556,12 @@ def judge_constant(table,p,q,color):
                     score_bl=0
                     line_north=[]
                     break
+    res_SN=enemy_left*enemy_right
 
+
+    enemy_left=False
+    enemy_right=False
+    res_EW=False
     #East
     score_rc=0
     line_east=[]
@@ -584,9 +589,9 @@ def judge_constant(table,p,q,color):
                     score_rc=0
                     line_east=[]
                     break
-    print "line_east:" + str((len(line_east)))
-    for i in range(len(line_east)):
-        res[line_east[i][0]][line_east[i][1]]=ME
+    else:
+        enemy_left=False
+
     #West
     score_lc=0
     line_west=[]
@@ -611,8 +616,9 @@ def judge_constant(table,p,q,color):
                     line_west=[]
                     score_lc=0
                     break
-    for i in range(len(line_west)):
-        res[line_west[i][0]][line_west[i][1]]=ME
+    else:
+        enemy_right=True
+    res_EW=enemy_left*enemy_right
     #southeast
     score_se=0
     line_SE=[]
@@ -738,10 +744,9 @@ def judge_constant(table,p,q,color):
                 else:
                     score_nw=0
                     break
-    for i in range(len(line_NW)):
-        res[line_NW[i][0]][line_NW[i][1]]=ME
-        
 
+
+    return res_SN*res_EW*res_upper+res_lower
 
 def maximum_constant(table,color):
     
