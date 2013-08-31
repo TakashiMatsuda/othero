@@ -512,116 +512,94 @@ def judge_constant(table,p,q,color):
         ENEMY=1
     #South-North
     score_SN=0
-    enemy_left=False
-    enemy_right=False
-    res_SN=False
+    enemy_left=0
+    enemy_right=0
+    res_SN=0
     if p<N-1:
         for i in range(p+1,N):
             if table[i][q]==0:
-                score_bl=0
-                enemy_left=True
+                enemy_left=0
                 break
             if table[i][q]==ME:
-                continue
-            if table[i][q]==ENEMY:
-                if i!=N-1:
-                    score_bl+=1
+                if j<N-1:
+                    continue
                 else:
-                    score_bl=0
+                    res_SN=1
                     break
+            if table[i][q]==ENEMY:
+                enemy_left=-1
+                break
+
     else:
-        res_SN=True
-    
+        res_SN=1
     #North
-    score_ol=0
-    line_north=[]
-    if p>0:
-        for i in range(p-1,-1,-1):
-            if table[i][q]==0:
-                score_ol=0
-                line_north=[]
-                break
-            if table[i][q]==ME:
-                if score_ol>0:
-                    line_north.append([i,q])
+    if res_SN!=1:
+        if p>0:
+            for i in range(p-1,-1,-1):
+                if table[i][q]==0:
+                    enemy_right=0
                     break
-                else:
-                    line_north=[]
+                if table[i][q]==ME:
+                    if i>0:
+                        continue
+                    else:
+                        res_SN=1
+                if table[i][q]==ENEMY:
+                    enemy_right=-1
                     break
-            if table[i][q]==ENEMY:
-                if i!=N-1:
-                    score_bl+=1
-                    line_north.append([i,q])
-                else:
-                    score_bl=0
-                    line_north=[]
-                    break
-    res_SN=enemy_left*enemy_right
 
+        else:
+            res_SN=1
+    if res_SN!=1:
+        res_SN=enemy_left*enemy_right
 
-    enemy_left=False
-    enemy_right=False
-    res_EW=False
+    #East-West
+    enemy_left=0
+    enemy_right=0
+    res_EW=0
     #East
-    score_rc=0
-    line_east=[]
-    vect_rc=[0,0]
     if q<N-1:
         for j in range(q+1,N):
-            print range(q+1,N)
-            print "loop:"+str(j)
             if table[p][j]==0:
-                score_rc=0
-                line_east=[]
+                enemy_left=0
                 break
             if table[p][j]==ME:
-                if score_rc>0:
-                    line_east.append([p,j])
-                    break
+                if j<N-1:
+                    continue
                 else:
-                    line_east=[]
+                    res_EW=1
                     break
             if table[p][j]==ENEMY:
-                if i!=N-1:
-                    score_rc+=1
-                    line_east.append([p,j])
-                else:
-                    score_rc=0
-                    line_east=[]
-                    break
+                enemy_left=-1
+                break
     else:
-        enemy_left=False
-
+        res_EW=1
     #West
-    score_lc=0
-    line_west=[]
     if q>0:
         for j in range(q-1,-1,-1):
             if table[p][j]==0:
-                score_lc=0
-                line_west=[]
+                enemy_right=0
                 break
             if table[p][j]==ME:
-                if score_lc>0:
-                    line_west.append([p,j])
-                    break
+                if j>0:
+                    continue
                 else:
-                    line_west=[]
+                    res_EW=1
                     break
             if table[i][q]==ENEMY:
-                if i!=N-1:
-                    score_lc+=1
-                    line_west.append([p,j])
-                else:
-                    line_west=[]
-                    score_lc=0
-                    break
+                enemy_right=-1
+                break
     else:
-        enemy_right=True
-    res_EW=enemy_left*enemy_right
-    #southeast
-    score_se=0
-    line_SE=[]
+        res_EW=1
+
+    if res_EW!=1:
+        res_EW=enemy_left*enemy_right
+
+    #Southeast-Northwest
+    enemy_left=0
+    enemy_right=0
+    res_SENW=0
+    #Southeast
     i=0
     j=0
     if p<N-1 and q<N-1:
@@ -629,124 +607,102 @@ def judge_constant(table,p,q,color):
         j=q+1
         while(i<N and j<N):
             if table[i][j]==0:
-                score_se=0
-                line_SE=[]
+                enemy_left=0
                 break
             if table[i][j]==ME:
-                if score_se>0:
-                    line_SE.append([i,j])
-                    break
-                else:
-                    line_SE=[]
-                    break
-            if table[i][j]==ENEMY:
-                if i!=N-1 and j!=N-1:
-                    score_se+=1
-                    line_SE.append([i,j])
+                if i<N-1 and j<N-1:
                     i+=1
                     j+=1
+                    continue
                 else:
-                    line_SE=[]
-                    score_se=0
-                    break
-    for i in range(len(line_SE)):
-        print "line_SE"+str(line_SE)
-        res[line_SE[i][0]][line_SE[i][1]]=ME
-    #southwest
-    score_sw=0
-    line_SW=[]
-    i=0
-    j=0
-    if p<N-1 and q>0:
-        i=p+1
-        j=q-1
-        while(i>0 and j<N):
-            if table[i][j]==0:
-                score_sw=0
-                line_SW=[]
-                break
-            if table[i][j]==ME:
-                if score_sw>0:
-                    line_SW.append([i,j])
-                    break
-                else:
-                    line_SW=[]
+                    res_EW=1
                     break
             if table[i][j]==ENEMY:
-                if i!=0 and j!=N-1:
-                    score_sw+=1
-                    line_SW.append([i,j])
-                    i+=1
-                    j-=1
-                else:
-                    line_SW=[]
-                    score_sw=0
-                    break
-    for i in range(len(line_SW)):
-        res[line_SW[i][0]][line_SW[i][1]]=ME
-    #northeast
-    score_ne=0
-    line_NE=[]
-    i=0
-    j=0
-    if p>0 and q<N-1:
-        i=p-1
-        j=q+1
-        while(i>0 and j<N):
-            if table[i][j]==0:
-                score_ne=0
-                line_NE=[]
+                enemy_left=-1
                 break
-            if table[i][j]==ME:
-                if score_ne==0:
-                    line_NE.append([i,j])
-                    break
-                else:
-                    line_NE=[]
-                    break
-            if table[i][j]==ENEMY:
-                if i!=0 and j!=N-1:
-                    score_ne+=1
-                    line_NE.append([i,j])
-                    i-=1
-                    j+=1
-                else:
-                    score_ne=0
-                    line_NE=[]
-                    break
-    for i in range(len(line_NE)):
-        res[line_NE[i][0]][line_NE[i][1]]=ME
+    else:
+        res_SENW=1
     #northwest
-    score_nw=0
-    line_NW=[]
     i=0
     j=0
     if p>0 and q>0:
         i=p-1
         j=q-1
-        while(i>0 and j>0):
+        while(i>=0 and j>=0):
             if table[i][j]==0:
-                score_nw=0
-                line_NW=[]
+                enemy_right=0
                 break
             if table[i][j]==ME:
-                if score_nw==0:
-                    line_NW.append([i,j])
-                    break
-                else:
-                    break
-            if table[i][j]==ENEMY:
-                if i!=0 and j!=N-1:
-                    score_nw+=1
-                    line_NW.append([i,j])
+                if i>0 and j>0:
                     i-=1
                     j-=1
+                    continue
                 else:
-                    score_nw=0
+                    res_SENW=1
                     break
+            if table[i][j]==ENEMY:
+                enemy_right=-1
+                break
+    else:
+        res_SENW=1
+    if res_SENW!=1:
+        res_SENW=enemy_left*enemy_right
 
+    #Southwest-Northeast
+    enemy_left=0
+    enemy_right=0
+    res_SWNE=0
+    #southwest
+    i=0
+    j=0
+    if p<N-1 and q>0:
+        i=p+1
+        j=q-1
+        while(i<N and j>=0):
+            if table[i][j]==0:
+                enemy_left=0
+                break
+            if table[i][j]==ME:
+                if i<N-1 and j>0:
+                    i+=1
+                    j-=1
+                    continue
+                else:
+                    res_SWNE=1
+                    break
+            if table[i][j]==ENEMY:
+                enemy_left=-1
+                break
+    else:
+        res_SWNE=1
+    #northeast
+    i=0
+    j=0
+    if p>0 and q<N-1:
+        i=p-1
+        j=q+1
+        while(i>=0 and j<N):
+            if table[i][j]==0:
+                enemy_right=0
+                break
+            if table[i][j]==ME:
+                if i>0 and j<N-1:
+                    i-=1
+                    j+=1
+                    continue
+                else:
+                    res_SWNE=1
+                    break
+            if table[i][j]==ENEMY:
+                enemy_right=-1
+                break
+    else:
+        res_SWNE=1
+    if res_SWNE!=1:
+        res_SWNE=enemy_left*enemy_right
 
-    return res_SN*res_EW*res_upper+res_lower
+    #Total
+    return res_SN*res_EW*res_SENW*res_SWNE
 
 def maximum_constant(table,color):
     
