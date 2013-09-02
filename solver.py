@@ -258,6 +258,7 @@ def transition(table,p,q,player):
     #North
     score_ol=0
     line_north=[]
+
     if p>0:
         for i in range(p-1,-1,-1):
             if table[i][q]==0:
@@ -273,10 +274,10 @@ def transition(table,p,q,player):
                     break
             if table[i][q]==ENEMY:
                 if i!=N-1:
-                    score_bl+=1
+                    score_ol+=1
                     line_north.append([i,q])
                 else:
-                    score_bl=0
+                    score_ol=0
                     line_north=[]
                     break
     for i in range(len(line_north)):
@@ -287,8 +288,6 @@ def transition(table,p,q,player):
     vect_rc=[0,0]
     if q<N-1:
         for j in range(q+1,N):
-            print range(q+1,N)
-            print "loop:"+str(j)
             if table[p][j]==0:
                 score_rc=0
                 line_east=[]
@@ -308,7 +307,6 @@ def transition(table,p,q,player):
                     score_rc=0
                     line_east=[]
                     break
-    print "line_east:" + str((len(line_east)))
     for i in range(len(line_east)):
         res[line_east[i][0]][line_east[i][1]]=ME
     #West
@@ -368,7 +366,6 @@ def transition(table,p,q,player):
                     score_se=0
                     break
     for i in range(len(line_SE)):
-        print "line_SE"+str(line_SE)
         res[line_SE[i][0]][line_SE[i][1]]=ME
     #southwest
     score_sw=0
@@ -378,7 +375,7 @@ def transition(table,p,q,player):
     if p<N-1 and q>0:
         i=p+1
         j=q-1
-        while(i>0 and j<N):
+        while(i<N and j>0):
             if table[i][j]==0:
                 score_sw=0
                 line_SW=[]
@@ -391,7 +388,7 @@ def transition(table,p,q,player):
                     line_SW=[]
                     break
             if table[i][j]==ENEMY:
-                if i!=0 and j!=N-1:
+                if i!=N-1 and j!=0:
                     score_sw+=1
                     line_SW.append([i,j])
                     i+=1
@@ -708,11 +705,7 @@ def maximum_constant(table,color):
     return 0
 
 def constant_matrix(table,color):
-    res=table
     for i in range(len(table)):
         for j in range(len(table[0])):
-            res[i][j]=judge_constant(table,i,j,color)
-
-    return res
-                       
-
+            table[i][j]=judge_constant(table,i,j,color)
+    return table
