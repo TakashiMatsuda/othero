@@ -37,9 +37,14 @@ while(True):
     order1=int(raw_input(">入力待ち:行"))
     order2=int(raw_input(">入力待ち:列"))
     got_table=solver.transition(got_table,order1,order2,2)
+    print "----transition by you->>>"
     print asciivision.output(got_table)
     greedychoice=solver.greedy_eval(got_table)
     print greedychoice
-    print asciivision.output(solver.transition(got_table,greedychoice[0],greedychoice[1],1))
-
+    result=solver.transition(got_table,greedychoice[0],greedychoice[1],1)
+    print "----Calc....RESULT---->>>"
+    print asciivision.output(result)
+    print "----constant matrix----"
+    print asciivision.output(solver.constant_matrix(result,1))
+    
 

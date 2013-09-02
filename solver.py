@@ -521,7 +521,7 @@ def judge_constant(table,p,q,color):
                 enemy_left=0
                 break
             if table[i][q]==ME:
-                if j<N-1:
+                if i<N-1:
                     continue
                 else:
                     res_SN=1
@@ -705,4 +705,14 @@ def judge_constant(table,p,q,color):
     return res_SN*res_EW*res_SENW*res_SWNE
 
 def maximum_constant(table,color):
-    
+    return 0
+
+def constant_matrix(table,color):
+    res=table
+    for i in range(len(table)):
+        for j in range(len(table[0])):
+            res[i][j]=judge_constant(table,i,j,color)
+
+    return res
+                       
+

@@ -3,9 +3,9 @@
 
 def output(table):
     L=[]
-    L.append(" １ ２ ３ ４ ５ ６ ７ ８\n")
+    L.append(" ０ １ ２ ３ ４ ５ ６ ７\n")
     for i in range(8):
-        L.append(str(i+1))
+        L.append(str(i))
         for j in range(8):
             if table[i][j]==0:
                 L.append("　 ")
