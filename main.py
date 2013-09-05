@@ -40,7 +40,7 @@ while(True):
     solver.transition(got_table,order1,order2,2)
     print "----transition by you->>>"
     print asciivision.output(got_table)
-    greedychoice=solver.greedy_eval(got_table)
+    greedychoice=solver.greedy_eval(got_table,1)
     print "----greedy choice------>>"
     print greedychoice
     solver.transition(got_table,greedychoice[0],greedychoice[1],1)
@@ -49,4 +49,3 @@ while(True):
     print "----constant matrix----"
     c=deepcopy(got_table)
     print asciivision.output(solver.constant_matrix(c,1))
-

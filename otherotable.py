@@ -464,3 +464,4 @@ def transition(table,p,q,player):
         print "SUCCESS: prior area"
         res[p][q]=ME
     return res
+

@@ -53,12 +53,13 @@ def evaluate_sum(table,p,q,player):
                     vect_ol[1]=q
                     break
                 else:
+                    score_ol=0
                     break
             if table[i][q]==ENEMY:
                 if i!=N-1:
-                    score_bl+=1
+                    score_ol+=1
                 else:
-                    score_bl=0
+                    score_ol=0
                     break
     #right column
     score_rc=0
@@ -138,7 +139,7 @@ def evaluate_sum(table,p,q,player):
     if p<N-1 and q>0:
         i=p+1
         j=q-1
-        while(i>0 and j<N):
+        while(i<N and j>=0):
             if table[i][j]==0:
                 score_sw=0
                 break
@@ -231,7 +232,6 @@ def transition(table,p,q,player):
         return 0
     
     res=table
-#    res[p][q]=ME
     #South
     line_south=[]#大きさ2の配列のリスト(座標のリスト)
     score_bl=0
@@ -332,8 +332,8 @@ def transition(table,p,q,player):
                 else:
                     line_west=[]
                     break
-            if table[i][q]==ENEMY:
-                if i!=N-1:
+            if table[p][j]==ENEMY:
+                if j!=0:
                     score_lc+=1
                     line_west.append([p,j])
                 else:
@@ -420,7 +420,7 @@ def transition(table,p,q,player):
                 line_NE=[]
                 break
             if table[i][j]==ME:
-                if score_ne==0:
+                if score_ne>0:
                     line_NE.append([i,j])
                     break
                 else:
@@ -469,19 +469,21 @@ def transition(table,p,q,player):
     for i in range(len(line_NW)):
         res[line_NW[i][0]][line_NW[i][1]]=ME
 
-    if score_bl+score_ol+score_rc+score_lc+score_se+score_sw+score_ne+score_nw!=0:
-        print "SUCCESS: prior area"
+    if score_bl+score_ol+score_rc+score_lc+score_se+score_sw+score_ne+score_nw>0:
+        print "SUCCESS: selecting prior area"
         res[p][q]=ME
+    else:
+        print "Fail: selecting  unprior area"
     return res
 
     
     
-def greedy_eval(table):
+def greedy_eval(table,player):
     mx=0
     s_vect=[0,0]
     for i in range(0,N):
         for j in range(0,N):
-            score=evaluate_sum(table,i,j,1)
+            score=evaluate_sum(table,i,j,player)
             if score > mx:
                 mx=score
                 s_vect[0]=i
