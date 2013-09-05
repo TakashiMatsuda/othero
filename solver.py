@@ -15,6 +15,8 @@ def evaluate_sum(table,p,q,player):
     else:
         ME=2
         ENEMY=1
+    if table[p][q]!=0:
+        return 0
     score=0
     #below
     score_bl=0
@@ -215,6 +217,7 @@ def evaluate_sum(table,p,q,player):
 def transition(table,p,q,player):
     """
     implement the transition
+    If (p,q) is dominant, do nothing.
     """
     if player==1:
         ME=1
@@ -222,9 +225,13 @@ def transition(table,p,q,player):
     else:
         ME=2
         ENEMY=1
-        
+    
+    if table[p][q]!=0:
+        print "ERROR: Putting on the dominant area"
+        return 0
+    
     res=table
-    res[p][q]=ME
+#    res[p][q]=ME
     #South
     line_south=[]#大きさ2の配列のリスト(座標のリスト)
     score_bl=0
@@ -273,7 +280,7 @@ def transition(table,p,q,player):
                     line_north=[]
                     break
             if table[i][q]==ENEMY:
-                if i!=N-1:
+                if i!=0:
                     score_ol+=1
                     line_north.append([i,q])
                 else:
@@ -375,7 +382,7 @@ def transition(table,p,q,player):
     if p<N-1 and q>0:
         i=p+1
         j=q-1
-        while(i<N and j>0):
+        while(i<N and j>=0):
             if table[i][j]==0:
                 score_sw=0
                 line_SW=[]
@@ -407,7 +414,7 @@ def transition(table,p,q,player):
     if p>0 and q<N-1:
         i=p-1
         j=q+1
-        while(i>0 and j<N):
+        while(i>=0 and j<N):
             if table[i][j]==0:
                 score_ne=0
                 line_NE=[]
@@ -439,7 +446,7 @@ def transition(table,p,q,player):
     if p>0 and q>0:
         i=p-1
         j=q-1
-        while(i>0 and j>0):
+        while(i>=0 and j>=0):
             if table[i][j]==0:
                 score_nw=0
                 line_NW=[]
@@ -461,6 +468,10 @@ def transition(table,p,q,player):
                     break
     for i in range(len(line_NW)):
         res[line_NW[i][0]][line_NW[i][1]]=ME
+
+    if score_bl+score_ol+score_rc+score_lc+score_se+score_sw+score_ne+score_nw!=0:
+        print "SUCCESS: prior area"
+        res[p][q]=ME
     return res
 
     
