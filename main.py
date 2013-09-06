@@ -48,4 +48,4 @@ while(True):
     print asciivision.output(got_table)
     print "----constant matrix----"
     c=deepcopy(got_table)
-    print asciivision.output(solver.constant_matrix(c,1))
+    print solver.constant_matrix(c,1)

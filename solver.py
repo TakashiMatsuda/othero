@@ -56,7 +56,7 @@ def evaluate_sum(table,p,q,player):
                     score_ol=0
                     break
             if table[i][q]==ENEMY:
-                if i!=N-1:
+                if i!=0:
                     score_ol+=1
                 else:
                     score_ol=0
@@ -77,8 +77,7 @@ def evaluate_sum(table,p,q,player):
                 else:
                     break
             if table[p][j]==ENEMY:
-                if i!=N-1:
-                    #Extend the target area here only
+                if j!=N-1:
                     score_rc+=1
                 else:
                     score_rc=0
@@ -99,7 +98,7 @@ def evaluate_sum(table,p,q,player):
                 else:
                     break
             if table[i][q]==ENEMY:
-                if i!=N-1:
+                if j!=0:
                     score_lc+=1
                 else:
                     score_lc=0
@@ -151,7 +150,7 @@ def evaluate_sum(table,p,q,player):
                 else:
                     break
             if table[i][j]==ENEMY:
-                if i!=0 and j!=N-1:
+                if i!=N-1 and j!=0:
                     score_sw+=1
                     i+=1
                     j-=1
@@ -166,12 +165,12 @@ def evaluate_sum(table,p,q,player):
     if p>0 and q<N-1:
         i=p-1
         j=q+1
-        while(i>0 and j<N):
+        while(i>=0 and j<N):
             if table[i][j]==0:
                 score_ne=0
                 break
             if table[i][j]==ME:
-                if score_ne==0:
+                if score_ne>0:
                     vect_ne[0]=i
                     vect_ne[1]=j
                     break
@@ -193,19 +192,19 @@ def evaluate_sum(table,p,q,player):
     if p>0 and q>0:
         i=p-1
         j=q-1
-        while(i>0 and j>0):
+        while(i>=0 and j>=0):
             if table[i][j]==0:
                 score_nw=0
                 break
             if table[i][j]==ME:
-                if score_nw==0:
+                if score_nw>0:
                     vect_nw[0]=i
                     vect_nw[1]=j
                     break
                 else:
                     break
             if table[i][j]==ENEMY:
-                if i!=0 and j!=N-1:
+                if i!=0 and j!=0:
                     score_nw+=1
                     i-=1
                     j-=1
@@ -307,7 +306,7 @@ def transition(table,p,q,player):
                     line_east=[]
                     break
             if table[p][j]==ENEMY:
-                if i!=N-1:
+                if j!=N-1:
                     score_rc+=1
                     line_east.append([p,j])
                 else:
@@ -458,7 +457,7 @@ def transition(table,p,q,player):
                 else:
                     break
             if table[i][j]==ENEMY:
-                if i!=0 and j!=N-1:
+                if i!=0 and j!=0:
                     score_nw+=1
                     line_NW.append([i,j])
                     i-=1
@@ -484,6 +483,7 @@ def greedy_eval(table,player):
     for i in range(0,N):
         for j in range(0,N):
             score=evaluate_sum(table,i,j,player)
+#            print "score: "+str(score)+" on ["+str(i)+" , "+str(j)
             if score > mx:
                 mx=score
                 s_vect[0]=i
