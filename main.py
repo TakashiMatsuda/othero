@@ -3,6 +3,7 @@
 import sys
 import solver
 import asciivision
+import table
 from copy import deepcopy
 
 N=8
@@ -48,4 +49,6 @@ while(True):
     print asciivision.output(got_table)
     print "----constant matrix----"
     c=deepcopy(got_table)
-    print solver.constant_matrix(c,1)
+    print asciivision.output(solver.constant_matrix(c,2))
+    print "----You can set these point below-----"
+    print asciivision.output_num(solver.possible_area(got_table,2))

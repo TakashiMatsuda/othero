@@ -16,3 +16,13 @@ def output(table):
         L.append('\n')
     s=''.join(L)
     return s
+
+
+def output_num(table):
+    L=[]
+    for i in range(8):
+        for j in range(8):
+            L.append(str(table[i][j]))
+        L.append('\n')
+    s=''.join(L)
+    return s

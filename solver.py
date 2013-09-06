@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 
+from copy import deepcopy
+
 N=8 ## table size
 
 """
@@ -7,6 +9,16 @@ N=8 ## table size
 1:my spot
 2:enemy spot
 """
+
+def possible_area(table,player):
+    ope_table=deepcopy(table)
+    for i in range(N):
+        for j in range(N):
+            if evaluate_sum(table,i,j,player)!=0:
+                ope_table[i][j]=1
+            else:
+                ope_table[i][j]=0
+    return ope_table
 
 def evaluate_sum(table,p,q,player):
     if player==1:
@@ -520,6 +532,11 @@ def judge_constant(table,p,q,color):
         ENEMY=2
     else:
         ENEMY=1
+
+    if table[p][q]!=0:
+        return 0
+    if evaluate_sum(table,p,q,color)==0:
+        return 0
     #South-North
     score_SN=0
     enemy_left=0
@@ -596,7 +613,7 @@ def judge_constant(table,p,q,color):
                 else:
                     res_EW=1
                     break
-            if table[i][q]==ENEMY:
+            if table[p][j]==ENEMY:
                 enemy_right=-1
                 break
     else:
