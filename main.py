@@ -44,11 +44,12 @@ while(True):
     print "----transition by you->>>"
     print asciivision.output(got_table)
     greedychoice=solver.greedy_eval(got_table,1)
-    print "----greedy choice------>>"
-    print greedychoice
-    print "pre maxroute"
-    print maxroute(const_f,got_table,1,1)
-    got_table=solver.transition(deepcopy(got_table),greedychoice[0],greedychoice[1],1)
+##    print "----greedy choice------>>"
+  ##  print greedychoice
+    print "------constant choice---->>"
+    answer_c=maxroute(const_f,got_table,1,1)
+    print answer_c
+    got_table=solver.transition(deepcopy(got_table),answer_c[0],answer_c[1],1)
     print "----Calc....RESULT---->>>"
     print asciivision.output(got_table)
     print "----constant matrix-------"
@@ -56,7 +57,12 @@ while(True):
     print asciivision.output(solver.constant_matrix(c,2))
     print "----You can set these point below-----"
     print asciivision.output_num(solver.possible_area(got_table,2))
+    print "----current table---------"
+    print asciivision.output(got_table)
+    print "Your color:○"
+    """
     consttable=[[0 for i in range(N)] for j in range(N)]
     for i in range(N):
         for j in range(N):
             consttable[i][j]=const_f(i,j,got_table,2)
+    """
