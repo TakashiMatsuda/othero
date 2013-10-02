@@ -30,7 +30,9 @@ def maxroute(e_func,table,color,step):
     Code below is for the case step is 1.
     """
     pos_area_me=possible_area(table,COLOR)
+    print "<calc start on maxroute>"
     for i in range(N):
+        print str(i)+"/7"
         for j in range(N):
             if pos_area_me[i][j]!=1:
                 continue

@@ -48,8 +48,9 @@ while(True):
     greedychoice=solver.greedy_eval(got_table,1)
 ##    print "----greedy choice------>>"
   ##  print greedychoice
-    print "------constant choice---->>"
+    print "----Calcutating.......please wait a minute-->>"
     answer_c=maxroute(const_f,got_table,1,STEP)
+    print "------constant choice---->>"
     print answer_c
     got_table=solver.transition(deepcopy(got_table),answer_c[0],answer_c[1],1)
     print "----Calc....RESULT---->>>"

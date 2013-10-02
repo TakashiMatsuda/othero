@@ -244,6 +244,7 @@ def transition(table,p,q,player):
     
     if table[p][q]!=0:
         print "ERROR: Putting on the dominant area"
+        
         return table
     
     res=deepcopy(table)
