@@ -26,7 +26,7 @@ def const_f(p,q,table,color):
     nx_count=0
     for i in range(N):
         for j in range(N):
-            if judge_constant(nx_table,i,j,color)==1:
+            if judge_constant(nx_table,i,j,color)==1:##ERROR, contents of nx_table
                 nx_count+=1
             else:
                 pass

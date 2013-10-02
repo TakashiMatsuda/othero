@@ -40,17 +40,18 @@ print "Your color:○"
 while(True):
     order1=int(raw_input(">入力待ち:行"))
     order2=int(raw_input(">入力待ち:列"))
-    solver.transition(got_table,order1,order2,2)
+    got_table=solver.transition(got_table,order1,order2,2)
     print "----transition by you->>>"
     print asciivision.output(got_table)
     greedychoice=solver.greedy_eval(got_table,1)
     print "----greedy choice------>>"
     print greedychoice
+    print "pre maxroute"
     print maxroute(const_f,got_table,1,1)
-    solver.transition(got_table,greedychoice[0],greedychoice[1],1)
+    got_table=solver.transition(deepcopy(got_table),greedychoice[0],greedychoice[1],1)
     print "----Calc....RESULT---->>>"
     print asciivision.output(got_table)
-    print "----constant matrix----"
+    print "----constant matrix-------"
     c=deepcopy(got_table)
     print asciivision.output(solver.constant_matrix(c,2))
     print "----You can set these point below-----"

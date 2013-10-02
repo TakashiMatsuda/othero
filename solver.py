@@ -230,6 +230,10 @@ def transition(table,p,q,player):
     """
     implement the transition
     If (p,q) is dominant, do nothing.
+
+
+    if the dominant area is selected,
+    returns the original table.
     """
     if player==1:
         ME=1
@@ -240,9 +244,9 @@ def transition(table,p,q,player):
     
     if table[p][q]!=0:
         print "ERROR: Putting on the dominant area"
-        return 0
+        return table
     
-    res=table
+    res=deepcopy(table)
     #South
     line_south=[]#大きさ2の配列のリスト(座標のリスト)
     score_bl=0
@@ -484,7 +488,7 @@ def transition(table,p,q,player):
         print "SUCCESS: selecting prior area  <solver.py>"
         res[p][q]=ME
     else:
-        print "Fail: selecting  unprior area  <solver.py>"
+        print "Fail: selecting  unprior area on "+str(p)+","+str(q)+" <solver.py>"
     return res
 
     
@@ -533,7 +537,7 @@ def judge_constant(table,p,q,color):
     else:
         ENEMY=1
 
-    if table[p][q]!=0:
+    if table[p][q]!=0:##ERROR
         return 0
     if evaluate_sum(table,p,q,color)==0:
         return 0
