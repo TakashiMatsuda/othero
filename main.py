@@ -12,6 +12,8 @@ N=8
 PLAYER=1
 COMPUTER=2
 
+STEP=4
+
 def parse_input(str):
     table=[[0 for i in range(N)] for j in range(N)]
     for i in range(0,N):
@@ -47,7 +49,7 @@ while(True):
 ##    print "----greedy choice------>>"
   ##  print greedychoice
     print "------constant choice---->>"
-    answer_c=maxroute(const_f,got_table,1,1)
+    answer_c=maxroute(const_f,got_table,1,STEP)
     print answer_c
     got_table=solver.transition(deepcopy(got_table),answer_c[0],answer_c[1],1)
     print "----Calc....RESULT---->>>"
