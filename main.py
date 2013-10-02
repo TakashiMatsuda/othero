@@ -5,6 +5,7 @@ import solver
 import asciivision
 import table
 from copy import deepcopy
+from evaluatefuncs import const_f
 
 N=8
 PLAYER=1
@@ -52,3 +53,7 @@ while(True):
     print asciivision.output(solver.constant_matrix(c,2))
     print "----You can set these point below-----"
     print asciivision.output_num(solver.possible_area(got_table,2))
+    consttable=[[] for 
+    for i in range(N):
+        for j in range(N):
+            consttable[i][j]=const_f(i,j,got_table,2)
