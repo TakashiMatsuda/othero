@@ -5,6 +5,8 @@ from solver import transition
 from solver import judge_constant
 from copy import deepcopy
 
+N=8
+
 def const_f(p,q,table,color):
     """
     The number of constant stone

@@ -6,15 +6,16 @@ import asciivision
 import table
 from copy import deepcopy
 from evaluatefuncs import const_f
+from treemain import maxroute
 
 N=8
 PLAYER=1
 COMPUTER=2
 
 def parse_input(str):
-    table=[[0 for i in range(8)] for j in range(8)]
-    for i in range(0,8):
-        for j in range(0,8):
+    table=[[0 for i in range(N)] for j in range(N)]
+    for i in range(0,N):
+        for j in range(0,N):
             tmp=str[(i)*9+j]
             if tmp=='N':
                 table[i][j]=0
@@ -45,6 +46,7 @@ while(True):
     greedychoice=solver.greedy_eval(got_table,1)
     print "----greedy choice------>>"
     print greedychoice
+    print maxroute(const_f,got_table,1,1)
     solver.transition(got_table,greedychoice[0],greedychoice[1],1)
     print "----Calc....RESULT---->>>"
     print asciivision.output(got_table)
@@ -53,7 +55,7 @@ while(True):
     print asciivision.output(solver.constant_matrix(c,2))
     print "----You can set these point below-----"
     print asciivision.output_num(solver.possible_area(got_table,2))
-    consttable=[[] for 
+    consttable=[[0 for i in range(N)] for j in range(N)]
     for i in range(N):
         for j in range(N):
             consttable[i][j]=const_f(i,j,got_table,2)

@@ -481,10 +481,10 @@ def transition(table,p,q,player):
         res[line_NW[i][0]][line_NW[i][1]]=ME
 
     if score_bl+score_ol+score_rc+score_lc+score_se+score_sw+score_ne+score_nw>0:
-        print "SUCCESS: selecting prior area"
+        print "SUCCESS: selecting prior area  <solver.py>"
         res[p][q]=ME
     else:
-        print "Fail: selecting  unprior area"
+        print "Fail: selecting  unprior area  <solver.py>"
     return res
 
     
