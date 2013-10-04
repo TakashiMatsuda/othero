@@ -43,7 +43,7 @@ def potential_f(table,p,q,color):
     """
     risk function will be available, it will improve the stone score.
     """
-    
+    return 1
 
 
 
@@ -51,4 +51,5 @@ def risk(table,p,q,color):
     """
     The number of stones robbed together with [p,q] for all direction
     """
+
     

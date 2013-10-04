@@ -110,7 +110,7 @@ def evaluate_sum(table,p,q,player):
                     break
                 else:
                     break
-            if table[i][q]==ENEMY:
+            if table[p][j]==ENEMY:
                 if j!=0:
                     score_lc+=1
                 else:
@@ -224,7 +224,6 @@ def evaluate_sum(table,p,q,player):
                 else:
                     score_nw=0
                     break
-        
     return score_bl+score_ol+score_rc+score_lc+score_se+score_sw+score_nw+score_ne
 
 def transition(table,p,q,player):
