@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from copy import deepcopy
+import sys, traceback
 
 N=8 ## table size
 
@@ -243,8 +244,9 @@ def transition(table,p,q,player):
         ENEMY=1
     
     if table[p][q]!=0:
-        print "ERROR: Putting on the dominant area"
-        
+        print table
+        print "ERROR: Putting on the dominant area on "+str(p)+","+str(q)
+        traceback.print_tb(exc_traceback,limit=1,file=sys.stdout)
         return table
     
     res=deepcopy(table)

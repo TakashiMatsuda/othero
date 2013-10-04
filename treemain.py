@@ -48,12 +48,15 @@ def maxroute(e_func,table,color,step):
                     if pos_area_enemy[k][l]!=1:
                         continue
                     exturnscore=e_func(k,l,res_for_myturn,ENEMY)
-                    if max_exturn > exturnscore:
+                    if max_exturn < exturnscore:
                         max_exturn=exturnscore
                         exturn_pos=[k,l]
             if step>0:
+                if max_exturn>0:
                 ## monotomic increase
-                prediction=myturnscore-max_exturn+best_score(e_func,transition(deepcopy(res_for_myturn),exturn_pos[0],exturn_pos[1],ENEMY),COLOR,step-1)
+                    prediction=myturnscore-max_exturn+best_score(e_func,transition(deepcopy(res_for_myturn),exturn_pos[0],exturn_pos[1],ENEMY),COLOR,step-1)
+                else:
+                    prediction=myturnscore-max_exturn
             if maxscore <prediction:
                 maxscore=prediction
                 maxpoint=[i,j]
@@ -63,6 +66,8 @@ def maxroute(e_func,table,color,step):
     return maxpoint
 
 def best_score(e_func,table,color,step):
+    if table[0][0]!=0:
+        print "table[0][0]!=0 <best_score>"
     if color==1:
         ENEMY=2
     else:
@@ -84,21 +89,26 @@ def best_score(e_func,table,color,step):
             max_exturn=0
             exturnscore=0
             exturn_pos=[0,0]
-            res_for_myturn=transition(deepcopy(table),i,j,COLOR)
-            pos_area_enemy=possible_area(res_for_myturn,ENEMY)
+            res_for_myturn=transition(deepcopy(table),i,j,COLOR)##
+            pos_area_enemy=possible_area(deepcopy(res_for_myturn),ENEMY)
             
             for k in range(N):
                 for l in range(N):
                     if pos_area_enemy[k][l]!=1:
                         continue
-                    exturnscore=e_func(k,l,res_for_myturn,ENEMY)
-                    if max_exturn > exturnscore:
+                    exturnscore=e_func(k,l,deepcopy(res_for_myturn),ENEMY)
+                    if max_exturn < exturnscore:
                         max_exturn=exturnscore
                         exturn_pos=[k,l]
             if step>0:
                 ## monotomic increase
-                prediction=myturnscore-max_exturn+best_score(e_func,transition(deepcopy(res_for_myturn),exturn_pos[0],exturn_pos[1],ENEMY),COLOR,step-1)
+                if max_exturn>0:
+                    prediction=myturnscore-max_exturn+best_score(e_func,transition(deepcopy(res_for_myturn),exturn_pos[0],exturn_pos[1],ENEMY),COLOR,step-1)
+            else:
+                prediction=myturnscore-max_exturn
             if maxscore <prediction:
                 maxscore=prediction
                 maxpoint=[i,j]
+
+            res_for_myturn=[[0]]
     return maxscore

@@ -59,7 +59,7 @@ while(True):
     c=deepcopy(got_table)
     print asciivision.output(solver.constant_matrix(c,2))
     print "----You can set these point below-----"
-    print asciivision.output_num(solver.possible_area(got_table,2))
+    print asciivision.output_num(solver.possible_area(deepcopy(got_table),2))
     print "----current table---------"
     print asciivision.output(got_table)
     print "Your color:○"
