@@ -66,8 +66,6 @@ def maxroute(e_func,table,color,step):
     return maxpoint
 
 def best_score(e_func,table,color,step):
-    if table[0][0]!=0:
-        print "table[0][0]!=0 <best_score>"
     if color==1:
         ENEMY=2
     else:

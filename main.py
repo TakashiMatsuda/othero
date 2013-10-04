@@ -7,6 +7,7 @@ import table
 from copy import deepcopy
 from evaluatefuncs import const_f
 from treemain import maxroute
+from solver import possible_area
 
 N=8
 PLAYER=1
@@ -40,12 +41,19 @@ print asciivision.output(got_table)
 
 print "Your color:○" 
 while(True):
-    order1=int(raw_input(">入力待ち:行"))
-    order2=int(raw_input(">入力待ち:列"))
-    got_table=solver.transition(got_table,order1,order2,2)
+    order=[0,0]
+    order[0]=int(raw_input(">入力待ち:行"))
+    order[1]=int(raw_input(">入力待ち:列"))
+    ## safety must be implemented
+    proposed=possible_area(got_table,2)
+    if proposed[order[0]][order[1]]==1:
+        got_table=solver.transition(got_table,order[0],order[1],2)
+    else:
+        print "<<INCORRECT INPUT>>"
+        continue
     print "----transition by you->>>"
     print asciivision.output(got_table)
-    greedychoice=solver.greedy_eval(got_table,1)
+#    greedychoice=solver.greedy_eval(got_table,1)
 ##    print "----greedy choice------>>"
   ##  print greedychoice
     print "----Calcutating.......please wait a minute-->>"

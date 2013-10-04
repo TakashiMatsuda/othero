@@ -15,7 +15,7 @@ def possible_area(table,player):
     ope_table=deepcopy(table)
     for i in range(N):
         for j in range(N):
-            if evaluate_sum(table,i,j,player)!=0:
+            if evaluate_sum(table,i,j,player)>0:
                 ope_table[i][j]=1
             else:
                 ope_table[i][j]=0
