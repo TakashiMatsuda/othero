@@ -39,10 +39,15 @@ def potential_f(table,p,q,color):
     """
     The number of constant and dynamic stone potentially get in the future
     2 step number
+    ここから生まれる固定石の数
     """
     """
     risk function will be available, it will improve the stone score.
     """
+    if (p==0 and q==0) or (p==0 and q==7) or (p==7 and q==0) or (p==7 and q==7):
+        return 24
+    if p==0 or q==0 or p==7 or q==7:
+        return 8
     return 1
 
 

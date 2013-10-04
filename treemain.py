@@ -57,6 +57,8 @@ def maxroute(e_func,table,color,step):
                     prediction=myturnscore-max_exturn+best_score(e_func,transition(deepcopy(res_for_myturn),exturn_pos[0],exturn_pos[1],ENEMY),COLOR,step-1)
                 else:
                     prediction=myturnscore-max_exturn
+            else:
+                prediction=myturnscore-max_exturn
             if maxscore <prediction:
                 maxscore=prediction
                 maxpoint=[i,j]
@@ -66,6 +68,9 @@ def maxroute(e_func,table,color,step):
     return maxpoint
 
 def best_score(e_func,table,color,step):
+    """
+    improveing now to parallel processing.
+    """
     if color==1:
         ENEMY=2
     else:
@@ -76,7 +81,7 @@ def best_score(e_func,table,color,step):
     maxpoint=[0,0]
     myturnscore=0
     """
-    Code below is for the case step is 1.
+    parallel processing below
     """
     pos_area_me=possible_area(table,COLOR)
     for i in range(N):
@@ -102,6 +107,8 @@ def best_score(e_func,table,color,step):
                 ## monotomic increase
                 if max_exturn>0:
                     prediction=myturnscore-max_exturn+best_score(e_func,transition(deepcopy(res_for_myturn),exturn_pos[0],exturn_pos[1],ENEMY),COLOR,step-1)
+                else:
+                    prediction=myturnscore-max_exturn
             else:
                 prediction=myturnscore-max_exturn
             if maxscore <prediction:
@@ -110,3 +117,6 @@ def best_score(e_func,table,color,step):
 
             res_for_myturn=[[0]]
     return maxscore
+
+def argwrapper(args):
+    
