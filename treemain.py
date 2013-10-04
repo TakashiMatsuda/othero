@@ -53,7 +53,7 @@ def maxroute(e_func,table,color,step):
                         exturn_pos=[k,l]
             if step>0:
                 if max_exturn>0:
-                ## monotomic increase
+                ## monotomic increase, we can improve here.
                     prediction=myturnscore-max_exturn+best_score(e_func,transition(deepcopy(res_for_myturn),exturn_pos[0],exturn_pos[1],ENEMY),COLOR,step-1)
                 else:
                     prediction=myturnscore-max_exturn
