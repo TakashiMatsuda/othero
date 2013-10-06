@@ -13,7 +13,7 @@ N=8
 PLAYER=1
 COMPUTER=2
 
-STEP=6
+STEP=7
 
 def parse_input(str):
     table=[[0 for i in range(N)] for j in range(N)]

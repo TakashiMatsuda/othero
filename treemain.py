@@ -97,7 +97,7 @@ def best_score(e_func,table,color,step):
         for j in range(N):
             if pos_area_me[i][j]!=1:
                 continue
-            myturnscore=e_func(i,j,deepcopy(table),COLOR)
+            myturnscore=e_func(i,j,table,COLOR)
             max_exturn=0
             exturnscore=0
             exturn_pos=[0,0]
@@ -108,7 +108,7 @@ def best_score(e_func,table,color,step):
                 for l in range(N):
                     if pos_area_enemy[k][l]!=1:
                         continue
-                    exturnscore=e_func(k,l,deepcopy(res_for_myturn),ENEMY)
+                    exturnscore=e_func(k,l,res_for_myturn,ENEMY)
                     if max_exturn < exturnscore:
                         max_exturn=exturnscore
                         exturn_pos=[k,l]
@@ -154,7 +154,6 @@ def myfunc(e_func,argtable,color,step,a,b):
                 ## monotomic increase
                 if max_exturn>0:
                     prediction=myturnscore-max_exturn+best_score(e_func,transition(deepcopy(res_for_myturn),exturn_pos[0],exturn_pos[1],ENEMY),COLOR,step-1)
-                else:
-                    prediction=myturnscore-max_exturn
             else:
                 prediction=myturnscore-max_exturn
+            
